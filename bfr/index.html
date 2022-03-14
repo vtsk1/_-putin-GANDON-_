@@ -74,4 +74,45 @@
        
     <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "c7fa78445a1045998552cdcabf080e27"}'></script><!-- End Cloudflare Web Analytics -->   
  </body>
+ <body onLoad="initClock()">
+<div id="timedate">
+DATE : 
+    <a id="d">1</a>.
+    <a id="mon">1</a>.
+    <a id="y">0</a>    
+<br>TIME : 
+    <a id="h">12</a> :
+    <a id="m">00</a>:
+    <a id="s">00</a>:
+    <a id="mi">000</a>
+  </div>
+    <script>
+Number.prototype.pad = function(n) {
+  for (var r = this.toString(); r.length < n; r = 0 + r);
+  return r;
+};
+
+function updateClock() {
+  var now = new Date();
+  var milli = now.getMilliseconds(),
+    sec = now.getSeconds(),
+    min = now.getMinutes(),
+    hou = now.getHours(),
+    mo = now.getMonth(),
+    dy = now.getDate(),
+    yr = now.getFullYear();
+var months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+  
+  var tags = ["d", "mon", "y", "h", "m", "s", "mi"],
+    corr = [dy, months[mo], yr, hou.pad(2), min.pad(2), sec.pad(2), milli];
+  for (var i = 0; i < tags.length; i++)
+    document.getElementById(tags[i]).firstChild.nodeValue = corr[i];
+}
+
+function initClock() {
+  updateClock();
+  window.setInterval("updateClock()", 1);
+}
+    </script>
+</body>
 </html>
